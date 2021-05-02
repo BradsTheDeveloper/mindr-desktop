@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>mindr - Home</title>
+        <link rel="stylesheet" type="text/css" href="../styles.css">
+    </head>
+
+    <body style="background: white;">
+
+        <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+        
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyBYKw5aOZgWZGHlvp1htTZ3JsrPMsKGnm4",
+                authDomain: "mindr-57963.firebaseapp.com",
+                projectId: "mindr-57963",
+                storageBucket: "mindr-57963.appspot.com",
+                messagingSenderId: "938586120161",
+                appId: "1:938586120161:web:a0a0a0195ca31a1a48fca0",
+                measurementId: "G-HDGZ0LJRD4"
+            };
+            firebase.initializeApp(firebaseConfig);
+
+            emailV = localStorage.emailV;
+            passwordV = localStorage.passwordV;
+
+            firebase.auth().signInWithEmailAndPassword(emailV, passwordV)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                signedInAlert();
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                notSignedInAlert();
+            });
+
+            function signedInAlert() {
+                alert("Succesful sign in!");
+            };
+
+            function notSignedInAlert() {
+                alert("Sign in didn't work!");
+            };
+
+            var userProfile = firebase.auth().currentUser;
+            var name, email, photoUrl, uid, emailVerified;
+
+            if (userProfile != null) {
+                name = userProfile.displayName;
+                // email = user.email;
+                // photoUrl = user.photoURL;
+                // emailVerified = user.emailVerified;
+                // uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                                // this value to authenticate with your backend server, if
+                                // you have one. Use User.getToken() instead.
+            }
+            else {
+                name = localStorage.nameV;
+                alert("name saved locally")
+                alert(name)
+            }
+        </script>
+
+        <button class="topRightCorner" id='logOut'>Log Out</button>
+        <script> // Log Out button script
+            document.getElementById('logOut').onclick = function(){
+                firebase.auth().signOut()
+                .then(() => {
+                    localStorage.removeItem("emailV");
+                    localStorage.removeItem("passwordV");
+                    var isUserLoggedIn = false;
+                    localStorage.isUserLoggedIn = isUserLoggedIn;
+                    alert("You have been logged out.")
+                    location.href='./login.html';
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // ..
+                    alert("An error occured. Please try again later.")
+                });
+            };
+        </script>
+
+        <h1 class="centreText">Good morning, Brads!</h1>
+
+        <script src="renderer.js"></script>
+
+    </body>
+
+</html>

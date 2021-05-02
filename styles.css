@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+
+body {
+    color: black;
+    opacity: 0.75;
+    font-family: 'Inter', serif;
+}
+
+h1 {
+    font-family: 'Inter', serif;
+    font-size: 38px;
+}
+
+h2 {
+    font-family: 'Inter', serif;
+    font-size: 20px;
+}
+
+h3 {
+    font-family: 'Inter', serif;
+}
+  
+p {
+    font-family: 'Inter', serif;
+}
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  /* The element to apply the animation to */
+.fadein {
+    animation-name: fadein;
+    animation-duration: 3s;
+  }
+
+.centreText {
+    text-align: center;
+}
+
+.bottomRightCorner {
+    position:absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.topRightCorner {
+    position:absolute;
+    top: 10px;
+    right: 10px;
+}
+
+input[type=text], input[type=password] {
+    border: none;
+    background-color: #3cbc8d00;
+    outline: none;
+    text-align: center;
+    font-family: 'Inter', serif;
+}
+
+input[type=button], input[type=submit], input[type=reset], button {
+    background-color: #ffffff;
+    border: 2px solid white;
+    border-radius: 100px;
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: 'Inter', serif;
+    
+}
+
+.centre {
+    margin: auto;
+}
+
+.buttonSelected {
+    background-color: black; 
+    color: #ffffff; 
+  }  

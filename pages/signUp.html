@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>mindr - Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+  </head>
+
+  <style>
+    body {
+      background-image: url('../assets/loginPic.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      color: white;
+    }
+
+    input[type=text], input[type=password] {
+      border-bottom: 2px solid white;
+      color: white;
+      height: 30px;
+      width: 300px; 
+      font-family: 'Karla', serif;
+    }
+
+    input[type=text]:focus {
+      border: none;
+      border-bottom: 2px solid rgb(164, 198, 250);
+      outline: none;
+    }
+  </style>
+
+  <body>
+    <script>
+      // defining functions
+      function goToHomescreen() {
+        location.href='./home.html';
+      };
+      function UserIsLoggedIn() {
+        var isUserLoggedIn = true;
+        var boardCount = 0;
+        localStorage.boardCount = boardCount;
+        localStorage.isUserLoggedIn = isUserLoggedIn;
+      };
+      function AssignUsersName() {
+        var userProfile = firebase.auth().currentUser;
+
+        userProfile.updateProfile({
+          displayName: nameV
+        }).then(function() {
+          alert("Name updated")
+        }).catch(function(error) {
+          // An error happened.
+          alert("Name not updated")
+        });
+      };
+
+      var isUserLoggedIn = localStorage.isUserLoggedIn;
+
+      if(isUserLoggedIn == "true"){
+        goToHomescreen()
+      };
+    </script>
+
+    
+
+    <script>
+      
+      //const customTitlebar = require('custom-electron-titlebar');
+
+      //new customTitlebar.Titlebar({
+      //  backgroundColor: customTitlebar.Color.fromHex('#000e36')
+      //});
+      
+    
+    </script>
+
+    <div class="centre">
+      <h1 class="fadein centreText" style="line-height:20px;">Welcome to mindr</h1>
+      <h2 class="fadein centreText" style="opacity:0;animation-delay:2s;animation-fill-mode:forwards;line-height:20px;">Log in or sign up to get started</p>
+      <button class="buttonSelected">Sign Up</button>
+      <button id="loginScreenSelect">Login</button>
+    </div>
+
+    <br>
+
+    <div class="fadein centreText" style="opacity:0;line-height:10px;height:50px;margin:0;animation-delay:3s;animation-fill-mode:forwards;">
+      <p>Name</p> <br><br> <input id="namebox" type="text"></input> <br><br>
+      <p>Email</p>  <br><br> <input id="emailbox" type="text"></input> <br><br>
+      <p>Password</p> <br><br> <input id="passwordbox" type="password"></input> <br><br>
+
+      <button id="signUp">Sign Up</button>
+    </div>
+
+    <p class="bottomRightCorner">Photo by <a href="https://unsplash.com/@martinkatler?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Martin Katler</a> on <a href="https://unsplash.com/@itsbrads6140/likes?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></a></p>
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+
+    <script id="MainScript">
+        var firebaseConfig = {
+          apiKey: "AIzaSyBYKw5aOZgWZGHlvp1htTZ3JsrPMsKGnm4",
+          authDomain: "mindr-57963.firebaseapp.com",
+          projectId: "mindr-57963",
+          storageBucket: "mindr-57963.appspot.com",
+          messagingSenderId: "938586120161",
+          appId: "1:938586120161:web:a0a0a0195ca31a1a48fca0",
+          measurementId: "G-HDGZ0LJRD4"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        var nameV, emailV, passwordV;
+
+        function Ready(){
+            nameV = document.getElementById('namebox').value;
+            emailV = document.getElementById('emailbox').value;
+            passwordV = document.getElementById('passwordbox').value;
+            localStorage.emailV = emailV;
+            localStorage.passwordV = passwordV;
+            localStorage.nameV = nameV;
+        }
+
+        document.getElementById('signUp').onclick = function(){
+            Ready();
+            firebase.auth().createUserWithEmailAndPassword(emailV, passwordV)
+            .then((userCredential) => {
+                // Signed in 
+                var user = userCredential.user;
+                AssignUsersName();
+                UserIsLoggedIn();
+                goToHomescreen();
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ..
+            });
+        }
+
+        document.getElementById('loginScreenSelect').onclick = function(){
+          location.href='./login.html';
+        }
+    </script>
+
+    <script> // Required files
+      // You can also require other files to run in this process
+      require('./renderer.js')
+    </script>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
